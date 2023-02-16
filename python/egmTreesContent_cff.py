@@ -161,6 +161,8 @@ PhoProbeVariablesToStore = cms.PSet(
     ph_sieip         = cms.string("full5x5_showerShapeVariables.sigmaIetaIphi"),
     ph_ESsigma       = cms.string("full5x5_showerShapeVariables.effSigmaRR"),
     ph_hoe           = cms.string("hadronicOverEm"),
+    ph_haspixelseed  = cms.string("hasPixelSeed"),
+    ph_eleveto       = cms.string("passElectronVeto"),
 
 #pho mva
     ph_mva80X       = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRun2Spring16NonTrigV1Values"),
