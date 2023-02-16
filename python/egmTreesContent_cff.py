@@ -172,8 +172,19 @@ PhoProbeVariablesToStore = cms.PSet(
     ph_neuIso   = cms.string("neutralHadronIso"),
     ph_phoIso   = cms.string("photonIso"),
     ph_chWorIso = cms.string("chargedHadronWorstVtxIso"),
-)
+# photon HLT prescale
+    Photon50prescale   = cms.InputTag("hltprescale:HLTPhoton50R9Id90HE10IsoMTotalPrescale"),
+    Photon75prescale   = cms.InputTag("hltprescale:HLTPhoton75R9Id90HE10IsoMTotalPrescale"),
+    Photon90prescale   = cms.InputTag("hltprescale:HLTPhoton90R9Id90HE10IsoMTotalPrescale"),
+    Photon120prescale   = cms.InputTag("hltprescale:HLTPhoton120R9Id90HE10IsoMTotalPrescale"),
+    Photon165prescale   = cms.InputTag("hltprescale:HLTPhoton165R9Id90HE10IsoMTotalPrescale"),
 
+    Photon50passTrigger   = cms.InputTag("hltprescale:HLTPhoton50R9Id90HE10IsoMPassTrigger"),
+    Photon75passTrigger   = cms.InputTag("hltprescale:HLTPhoton75R9Id90HE10IsoMPassTrigger"),
+    Photon90passTrigger   = cms.InputTag("hltprescale:HLTPhoton90R9Id90HE10IsoMPassTrigger"),
+    Photon120passTrigger   = cms.InputTag("hltprescale:HLTPhoton120R9Id90HE10IsoMPassTrigger"),
+    Photon165passTrigger   = cms.InputTag("hltprescale:HLTPhoton165R9Id90HE10IsoMPassTrigger"),
+)
 if not isReleaseAbove(10, 6): # old way of accessing these in CMSSW_10_2
     PhoProbeVariablesToStore.ph_sieip    = cms.InputTag("photonIDValueMapProducer:phoFull5x5SigmaIEtaIPhi")
     PhoProbeVariablesToStore.ph_ESsigma  = cms.InputTag("photonIDValueMapProducer:phoESEffSigmaRR")
@@ -227,6 +238,8 @@ CommonStuffForGsfElectronProbe = cms.PSet(
     addCaloMet       = cms.bool(False),
     pfMet            = cms.InputTag("slimmedMETsPuppi"),
     rho              = cms.InputTag("fixedGridRhoFastjetAll"),
+    #hltname          = cms.InputTag("hltProd:hltName"),
+    #hltIndex         = cms.InputTag("hltProd:hltIndex"),
     #    pfMet = cms.InputTag("slimmedMETsNoHF"),
 
     pairFlags     =  cms.PSet(
@@ -267,7 +280,13 @@ def getTnPVariablesForMCTruth(isMC=True):
     else:
       return cms.PSet(isMC = cms.bool(False))
 
+def setupHLTVariablesFor2016():
+    CommonStuffForPhotonProbe.variables.Photon175prescale = cms.InputTag("hltprescale:HLTPhoton175TotalPrescale")
+    CommonStuffForPhotonProbe.variables.Photon175passTrigger = cms.InputTag("hltprescale:HLTPhoton175PassTrigger")
 
+def setupHLTVariablesFor201718():
+    CommonStuffForPhotonProbe.variables.Photon200prescale = cms.InputTag("hltprescale:HLTPhoton200TotalPrescale")
+    CommonStuffForPhotonProbe.variables.Photon200passTrigger = cms.InputTag("hltprescale:HLTPhoton200PassTrigger")
 def setupTnPVariablesForAOD():
     CommonStuffForSuperClusterProbe.pileupInfoTag    = cms.InputTag("addPileupInfo")
     CommonStuffForSuperClusterProbe.vertexCollection = cms.InputTag("offlinePrimaryVerticesWithBS")

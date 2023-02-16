@@ -34,7 +34,7 @@ def setTagsProbes(process, options):
                                         inputs      = cms.InputTag("tagEleCutBasedTight"),
                                         bits        = cms.InputTag('TriggerResults::' + options['HLTProcessName']),
                                         objects     = cms.InputTag(hltObjects),
-                                        dR          = cms.double(0.3),
+                                        dR          = cms.double(0.2),
                                         isAND       = cms.bool(True)
                                     )
 
@@ -74,18 +74,45 @@ def setTagsProbes(process, options):
                                         inputs      = cms.InputTag("goodPhotons"),
                                         bits        = cms.InputTag('TriggerResults::' + options['HLTProcessName'] ),
                                         objects     = cms.InputTag(hltObjects),
-                                        dR          = cms.double(0.3),
-                                        isAND       = cms.bool(True)
+                                        dR          = cms.double(0.2),
+                                        isAND       = cms.bool(False)
                                         )
+    process.hltprescale = cms.EDProducer('ComputeL1HLTPrescales',
+                              probes = cms.InputTag(options['PHOTON_COLL']),
+                              #prunedTriggerNames = cms.untracked.vstring(),
+                              triggerResults = cms.InputTag("TriggerResults","","HLT"),
+                              triggerPrescaleInputTag = cms.untracked.string("patTrigger"),
+                              hltConfig = cms.string("HLT"),
+                              #triggerResults = cms.InputTag("TriggerResults","","HLT"),
+                              hltPaths = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon75_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon90_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon120_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon165_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon175_v*",
+                                                     ) if '2016' in options['era'] else
+                                         cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon75_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon90_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon120_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon165_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon200_v*",),  
+                              )
     if options['useAOD'] : process.probePho = process.goodPhotons.clone()
 
+    ################# PROBE ELECTRONs passHLT #######################
+    process.probePhoPassHLT        = process.probePho.clone()
+    process.probePhoPassHLT.inputs = cms.InputTag("probePho")
+    process.probePhoPassHLT.isAND  = cms.bool(False)
+    for flag, filterNames in options['PHOHLTFILTERSTOMEASURE'].iteritems():
+                       setattr(process, flag, process.probePhoPassHLT.clone(filterNames=filterNames))
     ######################### PROBE SCs #############################
     process.probeSC     = cms.EDProducer("RecoEcalCandidateTriggerCandProducer",
                                             filterNames  = cms.vstring(options['TnPHLTProbeFilters']),
                                              inputs       = cms.InputTag("goodSuperClusters"),
                                              bits         = cms.InputTag('TriggerResults::' + options['HLTProcessName']),
                                              objects      = cms.InputTag(hltObjects),
-                                             dR           = cms.double(0.3),
+                                             dR           = cms.double(0.2),
                                              isAND        = cms.bool(True)
                                         )
 
@@ -199,6 +226,7 @@ def setSequences(process, options):
     process.init_sequence += process.egmGsfElectronIDSequence
     process.init_sequence += process.egmPhotonIDSequence
     process.init_sequence += process.eleVarHelper
+    process.init_sequence += cms.Sequence(process.hltprescale)
     if options['addSUSY'] : process.init_sequence += process.susy_sequence
     if options['addSUSY'] : process.init_sequence += process.susy_sequence_requiresVID
 

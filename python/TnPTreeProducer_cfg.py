@@ -30,7 +30,7 @@ registerOption('includeSUSY', False,    'Add also the variables used by SUSY')
 registerOption('HLTname',     'HLT',    'HLT process name (default HLT)', optionType=VarParsing.varType.string) # HLTname was HLT2 in now outdated reHLT samples
 registerOption('GT',          'auto',   'Global Tag to be used', optionType=VarParsing.varType.string)
 registerOption('era',         '2018',   'Data-taking era: 2016, 2017, 2018, UL2017 or UL2018', optionType=VarParsing.varType.string)
-registerOption('logLevel',    'INFO',   'Loglevel: could be DEBUG, INFO, WARNING, ERROR', optionType=VarParsing.varType.string)
+registerOption('logLevel',    'DEBUG',   'Loglevel: could be DEBUG, INFO, WARNING, ERROR', optionType=VarParsing.varType.string)
 
 registerOption('L1Threshold',  0,       'Threshold for L1 matched objects', optionType=VarParsing.varType.int)
 
@@ -77,9 +77,9 @@ options['SUPERCLUSTER_COLL']    = "reducedEgamma:reducedSuperClusters" ### not u
 options['ELECTRON_CUTS']        = "ecalEnergy*sin(superClusterPosition.theta)>5.0 &&  (abs(-log(tan(superClusterPosition.theta/2)))<2.5)"
 options['SUPERCLUSTER_CUTS']    = "abs(eta)<2.5 &&  et>5.0"
 options['PHOTON_CUTS']          = "(abs(-log(tan(superCluster.position.theta/2)))<=2.5) && pt> 10"
-options['ELECTRON_TAG_CUTS']    = "(abs(-log(tan(superCluster.position.theta/2)))<=2.1) && !(1.4442<=abs(-log(tan(superClusterPosition.theta/2)))<=1.566) && pt >= 30.0"
+options['ELECTRON_TAG_CUTS']    = "(abs(-log(tan(superCluster.position.theta/2)))<=2.5) && !(1.4442<=abs(-log(tan(superClusterPosition.theta/2)))<=1.566) && pt >= 25.0"
 
-options['MAXEVENTS']            = cms.untracked.int32(varOptions.maxEvents)
+options['MAXEVENTS']            = cms.untracked.int32(10000)
 options['DoTrigger']            = varOptions.doTrigger
 options['DoRECO']               = varOptions.doRECO
 options['DoEleID']              = varOptions.doEleID
@@ -119,8 +119,8 @@ else:
 # Settings for trigger tag and probe measurement
 #################################################
 if '2016' in options['era']:
-  options['TnPPATHS']           = cms.vstring("HLT_Ele27_eta2p1_WPTight_Gsf_v*")
-  options['TnPHLTTagFilters']   = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter")
+  options['TnPPATHS']           = cms.vstring("HLT_Ele27_WPTight_Gsf_v*")
+  options['TnPHLTTagFilters']   = cms.vstring("hltEle27WPTightGsfTrackIsoFilter")
   options['TnPHLTProbeFilters'] = cms.vstring()
   options['HLTFILTERSTOMEASURE']= {"passHltEle27WPTightGsf" :                           cms.vstring("hltEle27WPTightGsfTrackIsoFilter"),
                                    "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1L1match" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
@@ -128,10 +128,25 @@ if '2016' in options['era']:
                                    "passHltDoubleEle33CaloIdLMWSeedLegL1match" :        cms.vstring("hltEG33CaloIdLMWPMS2Filter"),
                                    "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
                                   } # Some examples, you can add multiple filters (or OR's of filters, note the vstring) here, each of them will be added to the tuple
+  options['HLTPATHSMAP']   =  {
+                                     "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
+                                     "photon75" : cms.vstring("HLT_Photon75_R9Id90_HE10_IsoM_v*"),
+                                     "photon90" : cms.vstring("HLT_Photon90_R9Id90_HE10_IsoM_v*"),
+                                     "photon120": cms.vstring("HLT_Photon120_R9Id90_HE10_IsoM_v*"),
+                                     "photon165": cms.vstring("HLT_Photon165_R9Id90_HE10_IsoM_v*"),
+                                     "photon175": cms.vstring("HLT_Photon175_v*"),
+                                     }
+  options['HLTPATHSTOMEASURE'] = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM",
+                                             "HLT_Photon75_R9Id90_HE10_IsoM",
+                                             "HLT_Photon90_R9Id90_HE10_IsoM",
+                                             "HLT_Photon120_R9Id90_HE10_IsoM",
+                                             "HLT_Photon165_R9Id90_HE10_IsoM",
+                                             "HLT_Photon175"
+                                            )
 
 elif '2017' in options['era']:
-  options['TnPPATHS']           = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
-  options['TnPHLTTagFilters']   = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
+  options['TnPPATHS']           = cms.vstring("HLT_Ele35_WPTight_Gsf_v*")
+  options['TnPHLTTagFilters']   = cms.vstring("hltEle35noerWPTightGsfTrackIsoFilter")
   options['TnPHLTProbeFilters'] = cms.vstring()
   options['HLTFILTERSTOMEASURE']= {"passHltEle32DoubleEGWPTightGsf" :                   cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter"),
                                    "passEGL1SingleEGOr" :                               cms.vstring("hltEGL1SingleEGOrFilter"),
@@ -140,6 +155,21 @@ elif '2017' in options['era']:
                                    "passHltDoubleEle33CaloIdLMWSeedLegL1match" :        cms.vstring("hltEle33CaloIdLMWPMS2Filter"),
                                    "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
                                   }
+  options['HLTPATHSMAP']   =  {
+                                     "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
+                                     "photon75" : cms.vstring("HLT_Photon75_R9Id90_HE10_IsoM_v*"),
+                                     "photon90" : cms.vstring("HLT_Photon90_R9Id90_HE10_IsoM_v*"),
+                                     "photon120": cms.vstring("HLT_Photon120_R9Id90_HE10_IsoM_v*"),
+                                     "photon165": cms.vstring("HLT_Photon165_R9Id90_HE10_IsoM_v*"),
+                                     "photon200": cms.vstring("HLT_Photon200_v*"),
+                                     }
+  options['HLTPATHSTOMEASURE'] = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM",
+                                             "HLT_Photon75_R9Id90_HE10_IsoM",
+                                             "HLT_Photon90_R9Id90_HE10_IsoM",
+                                             "HLT_Photon120_R9Id90_HE10_IsoM",
+                                             "HLT_Photon165_R9Id90_HE10_IsoM",
+                                             "HLT_Photon200"
+                                            )
 
 elif '2018'  in options['era']:
   options['TnPPATHS']           = cms.vstring("HLT_Ele32_WPTight_Gsf_v*")
@@ -150,7 +180,36 @@ elif '2018'  in options['era']:
                                    "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2" :        cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter"),
                                    "passHltDoubleEle33CaloIdLMWSeedLegL1match" :        cms.vstring("hltEle33CaloIdLMWPMS2Filter"),
                                    "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
+                                   "passHltPhoton50" :                cms.vstring("hltEG50R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton75" :                cms.vstring("hltEG75R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton90" :                cms.vstring("hltEG90R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton120" :                cms.vstring("hltEG120R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton165" :                cms.vstring("hltEG165R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton200" :                cms.vstring("hltEG200HEFilter"),
                                   }
+  options['PHOHLTFILTERSTOMEASURE']= {
+                                   "passHltPhoton50" :                cms.vstring("hltEG50R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton75" :                cms.vstring("hltEG75R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton90" :                cms.vstring("hltEG90R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton120" :                cms.vstring("hltEG120R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton165" :                cms.vstring("hltEG165R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton200" :                cms.vstring("hltEG200HEFilter"),
+                                  }
+  options['HLTPATHSMAP']   =  {
+                                     "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
+                                     "photon75" : cms.vstring("HLT_Photon75_R9Id90_HE10_IsoM_v*"),
+                                     "photon90" : cms.vstring("HLT_Photon90_R9Id90_HE10_IsoM_v*"),
+                                     "photon120": cms.vstring("HLT_Photon120_R9Id90_HE10_IsoM_v*"),
+                                     "photon165": cms.vstring("HLT_Photon165_R9Id90_HE10_IsoM_v*"),
+                                     "photon200": cms.vstring("HLT_Photon200_v*"),
+                                     }
+  options['HLTPATHSTOMEASURE'] = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM",
+                                             "HLT_Photon75_R9Id90_HE10_IsoM",
+                                             "HLT_Photon90_R9Id90_HE10_IsoM",
+                                             "HLT_Photon120_R9Id90_HE10_IsoM",
+                                             "HLT_Photon165_R9Id90_HE10_IsoM",
+                                             "HLT_Photon200"
+                                            )
 
 # Apply L1 matching (using L1Threshold) when flag contains "L1match" in name
 options['ApplyL1Matching']      = any(['L1match' in flag for flag in options['HLTFILTERSTOMEASURE'].keys()])
@@ -189,6 +248,14 @@ pileUpSetup.setPileUpConfiguration(process, options)
 ## Import tnpVars to store in tree and configure for AOD
 ###################################################################
 import EgammaAnalysis.TnPTreeProducer.egmTreesContent_cff as tnpVars
+
+if '2016' in options['era']:
+  tnpVars.setupHLTVariablesFor2016()
+else:
+  tnpVars.setupHLTVariablesFor201718()
+#    tnpVars.PhoProbeVariablesToStore.Photon175prescale = cms.InputTag("hltprescale:HLTPhoton175TotalPrescale")
+#else:
+#    tnpVars.PhoProbeVariablesToStore.Photon200prescale = cms.InputTag("hltprescale:HLTPhoton200TotalPrescale")
 if options['useAOD']: tnpVars.setupTnPVariablesForAOD()
 mcTruthCommonStuff = tnpVars.getTnPVariablesForMCTruth(options['isMC'])
 
@@ -289,7 +356,9 @@ process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     allProbes     = cms.InputTag("probePho"),
                                     flags         = cms.PSet(),
                                     )
-
+for flag in options['PHOHLTFILTERSTOMEASURE']:
+  setattr(process.tnpPhoIDs.flags, flag, cms.InputTag(flag))
+#setattr(process.tnpPhoIDs.flags, 'photon50', cms.InputTag("hltprescale:HLTPhoton50R9Id90HE10IsoMTotalPrescale"))
 # ID's to store in the photon ID tree
 # Simply look which probePhoX modules were made in egmPhotonIDModules_cff.py and convert them into a passingX boolean in the tree 
 for probePhoModule in str(process.pho_sequence).split('+'):
@@ -332,8 +401,13 @@ if options['DEBUG']:
 
 process.evtCounter = cms.EDAnalyzer('SimpleEventCounter')
 
+#process.hltHelper = cms.EDProducer ('HLTprescaleHelper',
+#                             triggerInfoSrc = cms.InputTag("hltprod"), 
+#                              )
 process.p = cms.Path(
         process.evtCounter        +
+#        process.hltprod           +
+#        process.hltHelper         +
         process.hltFilter         +
         process.cand_sequence     +
         process.tnpPairs_sequence +
