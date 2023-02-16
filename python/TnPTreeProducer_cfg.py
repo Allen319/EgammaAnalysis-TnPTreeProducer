@@ -148,12 +148,21 @@ elif '2017' in options['era']:
   options['TnPPATHS']           = cms.vstring("HLT_Ele35_WPTight_Gsf_v*")
   options['TnPHLTTagFilters']   = cms.vstring("hltEle35noerWPTightGsfTrackIsoFilter")
   options['TnPHLTProbeFilters'] = cms.vstring()
-  options['HLTFILTERSTOMEASURE']= {"passHltEle32DoubleEGWPTightGsf" :                   cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter"),
-                                   "passEGL1SingleEGOr" :                               cms.vstring("hltEGL1SingleEGOrFilter"),
-                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1L1match" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
-                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2" :        cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter"),
-                                   "passHltDoubleEle33CaloIdLMWSeedLegL1match" :        cms.vstring("hltEle33CaloIdLMWPMS2Filter"),
-                                   "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
+  options['HLTFILTERSTOMEASURE']= {"passHltEle35WPTightGsf" :                   cms.vstring("hltEle35noerWPTightGsfTrackIsoFilter"),
+                                   "passHltPhoton50" :                cms.vstring("hltEG50R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton75" :                cms.vstring("hltEG75R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton90" :                cms.vstring("hltEG90R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton120" :                cms.vstring("hltEG120R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton165" :                cms.vstring("hltEG165R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton200" :                cms.vstring("hltEG200HEFilter"),
+                                  }
+  options['PHOHLTFILTERSTOMEASURE']= {
+                                   "passHltPhoton50" :                cms.vstring("hltEG50R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton75" :                cms.vstring("hltEG75R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton90" :                cms.vstring("hltEG90R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton120" :                cms.vstring("hltEG120R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton165" :                cms.vstring("hltEG165R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton200" :                cms.vstring("hltEG200HEFilter"),
                                   }
   options['HLTPATHSMAP']   =  {
                                      "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
