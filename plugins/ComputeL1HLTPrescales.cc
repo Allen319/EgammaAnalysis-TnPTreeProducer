@@ -86,7 +86,7 @@ ComputeL1HLTPrescales::~ComputeL1HLTPrescales() {}
 
 void ComputeL1HLTPrescales::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   using namespace edm;
-
+  bool isdata = iEvent.isRealData();
   // Read input
   edm::Handle<std::vector<pat::Photon>> probes;
   iEvent.getByToken(probesToken_, probes);
@@ -150,10 +150,42 @@ void ComputeL1HLTPrescales::produce(edm::Event& iEvent, const edm::EventSetup& i
     }
     std::vector<float> totPs;
     std::vector<float> passTriggerVec;
+    float hltprescale = 0;
+    float l1prescale  = 0;
     if(trigName.length()>0) {
-      std::pair<int,int> pss = hltPrescaleProvider_.prescaleValues(iEvent, iSetup, trigName);
+    ///////////////////////////////////////
+      if (isdata){
+        std::pair< std::vector< std::pair<std::string, int> >, int> detailedPrescaleInfo = hltPrescaleProvider_.prescaleValuesInDetail(iEvent, iSetup, trigName);
+        hltprescale = ( triggerPrescalesH.isValid() ? detailedPrescaleInfo.second : -1);
+        // save l1 prescale values in standalone vector
+        std::vector<int> l1prescalevals;
+        for (auto const& vv:detailedPrescaleInfo.first) l1prescalevals.push_back(vv.second);
+        // find and save minimum l1 prescale of any ORed L1 that seeds the HLT
+        bool isAllZeros = std::all_of(l1prescalevals.begin(), l1prescalevals.end(), [] (int i) { return i==0; });
+        if (isAllZeros) l1prescale = 0;
+        else{
+          // first remove all values that are 0
+          std::vector<int>::iterator new_end = std::remove(l1prescalevals.begin(), l1prescalevals.end(), 0);
+          // now find the minimum
+          std::vector<int>::iterator result = std::min_element(std::begin(l1prescalevals), new_end);
+          int minind = std::distance(l1prescalevals.begin(), result);
+          int l1prescale = (minind < std::distance(l1prescalevals.begin(), new_end) ? l1prescalevals.at(minind) : -1);
+          int harmonicmean = 1;
+          if (l1prescale != 1 && (new_end-std::begin(l1prescalevals) > 1)){
+            double s = 1.;
+            for (auto it = l1prescalevals.begin(); it != new_end; it++) s *= (1.-1./double(*it));
+            harmonicmean = (int) (1./(1.-s) + 0.5);
+          }
+          if ((harmonicmean != 1) && (harmonicmean != l1prescale)) l1prescale = harmonicmean;
+        }
+      }
+      else {
+        hltprescale = hltPrescaleProvider_.prescaleValue(iEvent, iSetup, trigName);
+        l1prescale = 1;
+      }
+    ///////////////////////////////////////
       for (probe = probes->begin(); probe != endprobes; ++probe) {
-        totPs.push_back(pss.first * pss.second);
+        totPs.push_back(l1prescale * hltprescale);
         if (passTrigger) passTriggerVec.push_back(1);
         else passTriggerVec.push_back(0);
       }
