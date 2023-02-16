@@ -174,6 +174,8 @@ PhoProbeVariablesToStore = cms.PSet(
     ph_neuIso   = cms.string("neutralHadronIso"),
     ph_phoIso   = cms.string("photonIso"),
     ph_chWorIso = cms.string("chargedHadronWorstVtxIso"),
+    ph_PFIsoChg = cms.InputTag("isoForPho:PFIsoChg"),
+    ph_PFIsoAll = cms.InputTag("isoForPho:PFIsoAll"),
 # photon HLT prescale
     Photon50prescale   = cms.InputTag("hltprescale:HLTPhoton50R9Id90HE10IsoMTotalPrescale"),
     Photon75prescale   = cms.InputTag("hltprescale:HLTPhoton75R9Id90HE10IsoMTotalPrescale"),
