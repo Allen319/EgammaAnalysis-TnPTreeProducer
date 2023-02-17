@@ -21,7 +21,8 @@ filesMiniAOD_2016 = {
 # Some miniAOD UL testfiles, which are available now and hopefully don't get deleted too soon
 filesMiniAOD_UL2016preVFP = {
     'mc':   cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/RunIISummer19UL16MiniAODAPV-DYJetsToLL_M-50.root'),
-    'data': cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/SingleElectron-Run2016E-21Feb2020_UL2016_HIPM.root'),
+    #'data': cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/SingleElectron-Run2016E-21Feb2020_UL2016_HIPM.root'),
+    'data': cms.untracked.vstring('root://cmsxrootd.fnal.gov///store/data/Run2016B/SingleElectron/MINIAOD/ver2_HIPM_UL2016_MiniAODv2-v2/140000/E4C8F51F-0909-464D-B87A-9117AF3CDC8A.root'),
 }
 
 filesMiniAOD_UL2016postVFP = {

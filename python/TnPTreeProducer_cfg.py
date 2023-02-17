@@ -123,11 +123,21 @@ if '2016' in options['era']:
   options['TnPHLTTagFilters']   = cms.vstring("hltEle27WPTightGsfTrackIsoFilter")
   options['TnPHLTProbeFilters'] = cms.vstring()
   options['HLTFILTERSTOMEASURE']= {"passHltEle27WPTightGsf" :                           cms.vstring("hltEle27WPTightGsfTrackIsoFilter"),
-                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1L1match" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
-                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2" :        cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter"),
-                                   "passHltDoubleEle33CaloIdLMWSeedLegL1match" :        cms.vstring("hltEG33CaloIdLMWPMS2Filter"),
-                                   "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
+                                   "passHltPhoton50" :                cms.vstring("hltEG50R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton75" :                cms.vstring("hltEG75R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton90" :                cms.vstring("hltEG90R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton120" :                cms.vstring("hltEG120R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton165" :                cms.vstring("hltEG165R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton175" :                cms.vstring("hltEG175HEFilter"),
                                   } # Some examples, you can add multiple filters (or OR's of filters, note the vstring) here, each of them will be added to the tuple
+  options['PHOHLTFILTERSTOMEASURE']= {
+                                   "passHltPhoton50" :                cms.vstring("hltEG50R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton75" :                cms.vstring("hltEG75R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton90" :                cms.vstring("hltEG90R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton120" :                cms.vstring("hltEG120R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton165" :                cms.vstring("hltEG165R9Id90HE10IsoMTrackIsoFilter"),
+                                   "passHltPhoton175" :                cms.vstring("hltEG175HEFilter"),
+                                  }
   options['HLTPATHSMAP']   =  {
                                      "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
                                      "photon75" : cms.vstring("HLT_Photon75_R9Id90_HE10_IsoM_v*"),
@@ -185,10 +195,6 @@ elif '2018'  in options['era']:
   options['TnPHLTTagFilters']   = cms.vstring("hltEle32WPTightGsfTrackIsoFilter")
   options['TnPHLTProbeFilters'] = cms.vstring()
   options['HLTFILTERSTOMEASURE']= {"passHltEle32WPTightGsf" :                           cms.vstring("hltEle32WPTightGsfTrackIsoFilter"),
-                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1L1match" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
-                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2" :        cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter"),
-                                   "passHltDoubleEle33CaloIdLMWSeedLegL1match" :        cms.vstring("hltEle33CaloIdLMWPMS2Filter"),
-                                   "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
                                    "passHltPhoton50" :                cms.vstring("hltEG50R9Id90HE10IsoMTrackIsoFilter"),
                                    "passHltPhoton75" :                cms.vstring("hltEG75R9Id90HE10IsoMTrackIsoFilter"),
                                    "passHltPhoton90" :                cms.vstring("hltEG90R9Id90HE10IsoMTrackIsoFilter"),
