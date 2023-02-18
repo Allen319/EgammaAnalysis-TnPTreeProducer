@@ -183,7 +183,15 @@ def setTagsProbes(process, options):
     EAFile_PFIso_Chg = cms.FileInPath("RecoEgamma/PhotonIdentification/data/Fall17/effAreaPhotons_cone03_pfChargedHadrons_90percentBased_V2.txt"),
     EAFile_PFIso_Neu = cms.FileInPath("RecoEgamma/PhotonIdentification/data/Fall17/effAreaPhotons_cone03_pfNeutralHadrons_90percentBased_V2.txt"),
     EAFile_PFIso_Pho = cms.FileInPath("RecoEgamma/PhotonIdentification/data/Fall17/effAreaPhotons_cone03_pfPhotons_90percentBased_V2.txt"),
-)
+    )
+    process.isoForEle = cms.EDProducer("EleIsoValueMapProducer",
+    src = cms.InputTag("slimmedElectrons"),
+    relative = cms.bool(False),
+    rho_MiniIso = cms.InputTag("fixedGridRhoFastjetAll"),
+    rho_PFIso = cms.InputTag("fixedGridRhoFastjetAll"),
+    EAFile_MiniIso = cms.FileInPath("RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_94X.txt"),
+    EAFile_PFIso = cms.FileInPath("RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_94X.txt"),
+    )
 ###################################################################################
 ################  --- SEQUENCES
 ###################################################################################
@@ -238,9 +246,11 @@ def setSequences(process, options):
 
     process.phoIso_sequence = cms.Sequence(process.photonIDValueMapProducer)
     process.phoIso_sequence += process.isoForPho
+    process.eleIso_sequence = cms.Sequence(process.isoForEle)
     process.init_sequence += process.egmGsfElectronIDSequence
     process.init_sequence += process.egmPhotonIDSequence
     process.init_sequence += process.eleVarHelper
+    process.init_sequence += process.eleIso_sequence
     process.init_sequence += process.phoIso_sequence
     process.init_sequence += cms.Sequence(process.hltprescale)
     if options['addSUSY'] : process.init_sequence += process.susy_sequence

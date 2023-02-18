@@ -98,7 +98,9 @@ EleProbeVariablesToStore = cms.PSet(
     # in order to get the isolation variable used in the triboson analysis
     # in the small test runs this variable is always 0, but I guess it is very rare to find another lepton in the cone
     el_relPfLepIso03 = cms.InputTag("eleVarHelper:pfLeptonIsolation"),
-
+    el_PFIsoChg = cms.InputTag("isoForEle:PFIsoChg"),
+    el_PFIsoAll = cms.InputTag("isoForEle:PFIsoAll"),
+    PFIsoAll04 = cms.InputTag("isoForEle:PFIsoAll04"),
     #added for VHbbEIso
     el_sumPUPt       = cms.string("pfIsolationVariables().sumPUPt"),
     el_relIso03_dB   = cms.string("(pfIsolationVariables().sumChargedHadronPt + max(pfIsolationVariables().sumNeutralHadronEt + pfIsolationVariables().sumPhotonEt - 0.5 * pfIsolationVariables().sumPUPt,0.0)) / pt() "),
