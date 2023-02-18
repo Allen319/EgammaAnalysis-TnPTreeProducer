@@ -18,6 +18,7 @@
 #include "DataFormats/Common/interface/TriggerResults.h"
 #include "DataFormats/HLTReco/interface/TriggerEvent.h"
 #include <DataFormats/PatCandidates/interface/Photon.h>
+#include <DataFormats/PatCandidates/interface/Electron.h>
 #include <DataFormats/PatCandidates/interface/PackedTriggerPrescales.h>
 #include "FWCore/Utilities/interface/RegexMatch.h"
 
@@ -30,7 +31,7 @@
 //
 // class declaration
 //
-
+template <class T>
 class ComputeL1HLTPrescales : public edm::EDProducer {
 public:
   explicit ComputeL1HLTPrescales(const edm::ParameterSet&);
@@ -42,7 +43,7 @@ private:
 
   // ----------member data ---------------------------
   //const edm::EDGetTokenT<edm::View<reco::Candidate>> probesLabel_;
-  edm::EDGetTokenT<std::vector<pat::Photon> > probesToken_;
+  edm::EDGetTokenT<std::vector<T> > probesToken_;
   //edm::Handle<edm::TriggerResults> triggerResults;
   edm::EDGetTokenT<edm::TriggerResults           > triggerToken_;
   edm::EDGetTokenT<pat::PackedTriggerPrescales> triggerPrescaleToken_;
@@ -58,9 +59,9 @@ private:
                         const edm::TriggerNames & triggerNames);
   void writeGlobalFloat(edm::Event &iEvent, const edm::Handle<edm::View<reco::Candidate> > &probes, const float value, const std::string &label) ;
 };
-
-ComputeL1HLTPrescales::ComputeL1HLTPrescales(const edm::ParameterSet& iConfig):
-  probesToken_(consumes<std::vector<pat::Photon> >(iConfig.getParameter<edm::InputTag>("probes"))),
+template <class T>
+ComputeL1HLTPrescales<T>::ComputeL1HLTPrescales(const edm::ParameterSet& iConfig):
+  probesToken_(consumes<std::vector<T> >(iConfig.getParameter<edm::InputTag>("probes"))),
   //probesLabel_(consumes<edm::View<reco::Candidate>>(iConfig.getParameter<edm::InputTag>("probes"))),
   triggerToken_    (consumes<edm::TriggerResults           >(iConfig.getParameter<edm::InputTag>("triggerResults"))),
   triggerPrescaleToken_(consumes<pat::PackedTriggerPrescales>(iConfig.getUntrackedParameter<std::string>("triggerPrescaleInputTag"))),
@@ -69,7 +70,7 @@ ComputeL1HLTPrescales::ComputeL1HLTPrescales(const edm::ParameterSet& iConfig):
   hltConfigLabel_(iConfig.getParameter<std::string>("hltConfig")),
   hltPaths_(iConfig.getParameter<std::vector<std::string> >("hltPaths"))
 {
-  std::cout<<hltPaths_.size()<<std::endl;
+  //std::cout<<hltPaths_.size()<<std::endl;
   for(unsigned int j=0; j<hltPaths_.size(); ++j) {
     // Trigger name should include "_v" at the end
     std::string tmpStr = hltPaths_[j].substr(0, hltPaths_[j].find("_v")); 
@@ -81,14 +82,15 @@ ComputeL1HLTPrescales::ComputeL1HLTPrescales(const edm::ParameterSet& iConfig):
 }
 
 
-ComputeL1HLTPrescales::~ComputeL1HLTPrescales() {}
+template <class T>
+ComputeL1HLTPrescales<T>::~ComputeL1HLTPrescales() {}
 
-
-void ComputeL1HLTPrescales::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
+template <class T>
+void ComputeL1HLTPrescales<T>::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   using namespace edm;
   bool isdata = iEvent.isRealData();
   // Read input
-  edm::Handle<std::vector<pat::Photon>> probes;
+  edm::Handle<std::vector<T>> probes;
   iEvent.getByToken(probesToken_, probes);
   edm::Handle<edm::TriggerResults> triggerResults;
   iEvent.getByToken(triggerToken_, triggerResults);
@@ -101,7 +103,7 @@ void ComputeL1HLTPrescales::produce(edm::Event& iEvent, const edm::EventSetup& i
      //        
   
   std::vector<float> tmp_ps;
-   typename std::vector<pat::Photon>::const_iterator probe, endprobes = probes->end();
+   typename std::vector<T>::const_iterator probe, endprobes = probes->end();
 
   for (probe = probes->begin(); probe != endprobes; ++probe) tmp_ps.push_back(-2);
   if(!triggerResults.isValid()) {
@@ -197,11 +199,12 @@ void ComputeL1HLTPrescales::produce(edm::Event& iEvent, const edm::EventSetup& i
     //writeGlobalFloat(iEvent, probes, totPs, trigName+"TotalPrescale");
     writeValueMap(iEvent, probes, totPs, trigName+"TotalPrescale");
     writeValueMap(iEvent, probes, passTriggerVec, trigName+"PassTrigger");
-    //std::cout << totPs << " for " << trigName+"TotalPrescale" <<std::endl;
+    //std::cout <<  trigName <<std::endl;
   } // end for(j)
 }
 
-void ComputeL1HLTPrescales::beginRun(edm::Run& iRun, edm::EventSetup const& iSetup) {
+template <class T>
+void ComputeL1HLTPrescales<T>::beginRun(edm::Run& iRun, edm::EventSetup const& iSetup) {
   bool changed = true;
   if(!hltPrescaleProvider_.init(iRun,iSetup,hltConfigLabel_,changed))
   //if(!hltPrescaleProvider_.hltConfigProvider().init(iRun, iSetup, hltConfigLabel_, changed)) 
@@ -209,7 +212,8 @@ void ComputeL1HLTPrescales::beginRun(edm::Run& iRun, edm::EventSetup const& iSet
 	      << hltConfigLabel_.c_str() << " in run " << iRun.run() << std::endl;
 }
 
-void ComputeL1HLTPrescales::initPattern(const edm::TriggerResults & result,
+template <class T>
+void ComputeL1HLTPrescales<T>::initPattern(const edm::TriggerResults & result,
                         const edm::EventSetup& iSetup,
                         const edm::TriggerNames & triggerNames)
 //--------------------------------------------------------------------------
@@ -250,7 +254,9 @@ void ComputeL1HLTPrescales::initPattern(const edm::TriggerResults & result,
         
     }
 }
-void ComputeL1HLTPrescales::writeGlobalFloat(edm::Event &iEvent, const edm::Handle<edm::View<reco::Candidate> > &probes, const float value, const std::string &label) { 
+
+template <class T>
+void ComputeL1HLTPrescales<T>::writeGlobalFloat(edm::Event &iEvent, const edm::Handle<edm::View<reco::Candidate> > &probes, const float value, const std::string &label) { 
   //std::unique_ptr<edm::ValueMap<float> > out(new edm::ValueMap<float>());
   auto out = std::make_unique<edm::ValueMap<float>>();
   edm::ValueMap<float>::Filler filler(*out);
@@ -260,6 +266,9 @@ void ComputeL1HLTPrescales::writeGlobalFloat(edm::Event &iEvent, const edm::Hand
   iEvent.put(std::move(out), label);
 }
 
+typedef ComputeL1HLTPrescales<pat::Electron> EleComputeL1HLTPrescales;
+DEFINE_FWK_MODULE(EleComputeL1HLTPrescales);
+typedef ComputeL1HLTPrescales<pat::Photon> PhoComputeL1HLTPrescales;
 // Define this module as plugin
-DEFINE_FWK_MODULE(ComputeL1HLTPrescales);
+DEFINE_FWK_MODULE(PhoComputeL1HLTPrescales);
 //#endif

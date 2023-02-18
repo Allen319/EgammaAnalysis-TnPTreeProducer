@@ -289,10 +289,13 @@ def getTnPVariablesForMCTruth(isMC=True):
 def setupHLTVariablesFor2016():
     CommonStuffForPhotonProbe.variables.Photon175prescale = cms.InputTag("hltprescale:HLTPhoton175TotalPrescale")
     CommonStuffForPhotonProbe.variables.Photon175passTrigger = cms.InputTag("hltprescale:HLTPhoton175PassTrigger")
+    CommonStuffForGsfElectronProbe.variables.Electron27passTrigger = cms.InputTag("hltprescaleEle:HLTEle27WPTightGsfPassTrigger")
 
 def setupHLTVariablesFor201718():
     CommonStuffForPhotonProbe.variables.Photon200prescale = cms.InputTag("hltprescale:HLTPhoton200TotalPrescale")
     CommonStuffForPhotonProbe.variables.Photon200passTrigger = cms.InputTag("hltprescale:HLTPhoton200PassTrigger")
+    CommonStuffForGsfElectronProbe.variables.Electron32passTrigger = cms.InputTag("hltprescaleEle:HLTEle32WPTightGsfPassTrigger")
+    CommonStuffForGsfElectronProbe.variables.Electron35passTrigger = cms.InputTag("hltprescaleEle:HLTEle35WPTightGsfPassTrigger")
 def setupTnPVariablesForAOD():
     CommonStuffForSuperClusterProbe.pileupInfoTag    = cms.InputTag("addPileupInfo")
     CommonStuffForSuperClusterProbe.vertexCollection = cms.InputTag("offlinePrimaryVerticesWithBS")

@@ -77,7 +77,7 @@ def setTagsProbes(process, options):
                                         dR          = cms.double(0.2),
                                         isAND       = cms.bool(False)
                                         )
-    process.hltprescale = cms.EDProducer('ComputeL1HLTPrescales',
+    process.hltprescale = cms.EDProducer('PhoComputeL1HLTPrescales',
                               probes = cms.InputTag(options['PHOTON_COLL']),
                               #prunedTriggerNames = cms.untracked.vstring(),
                               triggerResults = cms.InputTag("TriggerResults","","HLT"),
@@ -90,12 +90,43 @@ def setTagsProbes(process, options):
                                                      "HLT_Photon120_R9Id90_HE10_IsoM_v*",
                                                      "HLT_Photon165_R9Id90_HE10_IsoM_v*",
                                                      "HLT_Photon175_v*",
+                                                     "HLT_Ele25_eta2p1_WPTight_Gsf_v*",
+                                                     "HLT_Ele27_WPTight_Gsf_v*",
+                                                     "HLT_Ele27_eta2p1_WPLoose_Gsf_v*", 
                                                      ) if '2016' in options['era'] else
                                          cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*",
                                                      "HLT_Photon75_R9Id90_HE10_IsoM_v*",
                                                      "HLT_Photon90_R9Id90_HE10_IsoM_v*",
                                                      "HLT_Photon120_R9Id90_HE10_IsoM_v*",
                                                      "HLT_Photon165_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Ele35_WPTight_Gsf_v*",
+                                                     "HLT_Ele32_WPTight_Gsf_v*",
+                                                     "HLT_Photon200_v*",),  
+                              )
+    process.hltprescaleEle = cms.EDProducer('EleComputeL1HLTPrescales',
+                              probes = cms.InputTag(options['ELECTRON_COLL']),
+                              #prunedTriggerNames = cms.untracked.vstring(),
+                              triggerResults = cms.InputTag("TriggerResults","","HLT"),
+                              triggerPrescaleInputTag = cms.untracked.string("patTrigger"),
+                              hltConfig = cms.string("HLT"),
+                              #triggerResults = cms.InputTag("TriggerResults","","HLT"),
+                              hltPaths = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon75_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon90_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon120_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon165_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon175_v*",
+                                                     "HLT_Ele25_eta2p1_WPTight_Gsf_v*",
+                                                     "HLT_Ele27_WPTight_Gsf_v*",
+                                                     "HLT_Ele27_eta2p1_WPLoose_Gsf_v*", 
+                                                     ) if '2016' in options['era'] else
+                                         cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon75_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon90_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon120_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Photon165_R9Id90_HE10_IsoM_v*",
+                                                     "HLT_Ele35_WPTight_Gsf_v*",
+                                                     "HLT_Ele32_WPTight_Gsf_v*",
                                                      "HLT_Photon200_v*",),  
                               )
     if options['useAOD'] : process.probePho = process.goodPhotons.clone()
@@ -253,6 +284,7 @@ def setSequences(process, options):
     process.init_sequence += process.eleIso_sequence
     process.init_sequence += process.phoIso_sequence
     process.init_sequence += cms.Sequence(process.hltprescale)
+    process.init_sequence += cms.Sequence(process.hltprescaleEle)
     if options['addSUSY'] : process.init_sequence += process.susy_sequence
     if options['addSUSY'] : process.init_sequence += process.susy_sequence_requiresVID
 
