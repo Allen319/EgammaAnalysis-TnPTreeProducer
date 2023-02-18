@@ -100,7 +100,7 @@ EleProbeVariablesToStore = cms.PSet(
     el_relPfLepIso03 = cms.InputTag("eleVarHelper:pfLeptonIsolation"),
     el_PFIsoChg = cms.InputTag("isoForEle:PFIsoChg"),
     el_PFIsoAll = cms.InputTag("isoForEle:PFIsoAll"),
-    PFIsoAll04 = cms.InputTag("isoForEle:PFIsoAll04"),
+    el_PFIsoAll04 = cms.InputTag("isoForEle:PFIsoAll04"),
     #added for VHbbEIso
     el_sumPUPt       = cms.string("pfIsolationVariables().sumPUPt"),
     el_relIso03_dB   = cms.string("(pfIsolationVariables().sumChargedHadronPt + max(pfIsolationVariables().sumNeutralHadronEt + pfIsolationVariables().sumPhotonEt - 0.5 * pfIsolationVariables().sumPUPt,0.0)) / pt() "),
