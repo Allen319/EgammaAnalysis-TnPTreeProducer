@@ -137,6 +137,7 @@ EleProbeVariablesToStore = cms.PSet(
 
 PhoProbeVariablesToStore = cms.PSet(
     ph_eta    = cms.string("eta"),
+    ph_phi    = cms.string("phi"),
     ph_abseta = cms.string("abs(eta)"),
     ph_et     = cms.string("et"),
     ph_e      = cms.string("energy"),
