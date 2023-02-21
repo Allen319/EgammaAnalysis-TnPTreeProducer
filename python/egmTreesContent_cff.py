@@ -229,6 +229,10 @@ TagVariablesToStore = cms.PSet(
     Ele_IsoMVA94X   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV1Values"),
     Ele_noIsoMVA94XV2   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV2Values"), 
     Ele_IsoMVA94XV2   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV2Values"),
+
+    Ele_PFIsoChg = cms.InputTag("isoForEle:PFIsoChg"),
+    Ele_PFIsoAll = cms.InputTag("isoForEle:PFIsoAll"),
+    Ele_PFIsoAll04 = cms.InputTag("isoForEle:PFIsoAll04"),
     )
 
 CommonStuffForGsfElectronProbe = cms.PSet(

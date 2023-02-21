@@ -138,21 +138,21 @@ if '2016' in options['era']:
                                    "passHltPhoton165" :                cms.vstring("hltEG165R9Id90HE10IsoMTrackIsoFilter"),
                                    "passHltPhoton175" :                cms.vstring("hltEG175HEFilter"),
                                   }
-  options['HLTPATHSMAP']   =  {
-                                     "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
-                                     "photon75" : cms.vstring("HLT_Photon75_R9Id90_HE10_IsoM_v*"),
-                                     "photon90" : cms.vstring("HLT_Photon90_R9Id90_HE10_IsoM_v*"),
-                                     "photon120": cms.vstring("HLT_Photon120_R9Id90_HE10_IsoM_v*"),
-                                     "photon165": cms.vstring("HLT_Photon165_R9Id90_HE10_IsoM_v*"),
-                                     "photon175": cms.vstring("HLT_Photon175_v*"),
-                                     }
-  options['HLTPATHSTOMEASURE'] = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM",
-                                             "HLT_Photon75_R9Id90_HE10_IsoM",
-                                             "HLT_Photon90_R9Id90_HE10_IsoM",
-                                             "HLT_Photon120_R9Id90_HE10_IsoM",
-                                             "HLT_Photon165_R9Id90_HE10_IsoM",
-                                             "HLT_Photon175"
-                                            )
+  #options['HLTPATHSMAP']   =  {
+  #                                   "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
+  #                                   "photon75" : cms.vstring("HLT_Photon75_R9Id90_HE10_IsoM_v*"),
+  #                                   "photon90" : cms.vstring("HLT_Photon90_R9Id90_HE10_IsoM_v*"),
+  #                                   "photon120": cms.vstring("HLT_Photon120_R9Id90_HE10_IsoM_v*"),
+  #                                   "photon165": cms.vstring("HLT_Photon165_R9Id90_HE10_IsoM_v*"),
+  #                                   "photon175": cms.vstring("HLT_Photon175_v*"),
+  #                                   }
+  #options['HLTPATHSTOMEASURE'] = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM",
+  #                                           "HLT_Photon75_R9Id90_HE10_IsoM",
+  #                                           "HLT_Photon90_R9Id90_HE10_IsoM",
+  #                                           "HLT_Photon120_R9Id90_HE10_IsoM",
+  #                                           "HLT_Photon165_R9Id90_HE10_IsoM",
+  #                                           "HLT_Photon175"
+  #                                          )
 
 elif '2017' in options['era']:
   options['TnPPATHS']           = cms.vstring("HLT_Ele35_WPTight_Gsf_v*")
@@ -174,21 +174,21 @@ elif '2017' in options['era']:
                                    "passHltPhoton165" :                cms.vstring("hltEG165R9Id90HE10IsoMTrackIsoFilter"),
                                    "passHltPhoton200" :                cms.vstring("hltEG200HEFilter"),
                                   }
-  options['HLTPATHSMAP']   =  {
-                                     "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
-                                     "photon75" : cms.vstring("HLT_Photon75_R9Id90_HE10_IsoM_v*"),
-                                     "photon90" : cms.vstring("HLT_Photon90_R9Id90_HE10_IsoM_v*"),
-                                     "photon120": cms.vstring("HLT_Photon120_R9Id90_HE10_IsoM_v*"),
-                                     "photon165": cms.vstring("HLT_Photon165_R9Id90_HE10_IsoM_v*"),
-                                     "photon200": cms.vstring("HLT_Photon200_v*"),
-                                     }
-  options['HLTPATHSTOMEASURE'] = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM",
-                                             "HLT_Photon75_R9Id90_HE10_IsoM",
-                                             "HLT_Photon90_R9Id90_HE10_IsoM",
-                                             "HLT_Photon120_R9Id90_HE10_IsoM",
-                                             "HLT_Photon165_R9Id90_HE10_IsoM",
-                                             "HLT_Photon200"
-                                            )
+  #options['HLTPATHSMAP']   =  {
+  #                                   "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
+  #                                   "photon75" : cms.vstring("HLT_Photon75_R9Id90_HE10_IsoM_v*"),
+  #                                   "photon90" : cms.vstring("HLT_Photon90_R9Id90_HE10_IsoM_v*"),
+  #                                   "photon120": cms.vstring("HLT_Photon120_R9Id90_HE10_IsoM_v*"),
+  #                                   "photon165": cms.vstring("HLT_Photon165_R9Id90_HE10_IsoM_v*"),
+  #                                   "photon200": cms.vstring("HLT_Photon200_v*"),
+  #                                   }
+  #options['HLTPATHSTOMEASURE'] = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM",
+  #                                           "HLT_Photon75_R9Id90_HE10_IsoM",
+  #                                           "HLT_Photon90_R9Id90_HE10_IsoM",
+  #                                           "HLT_Photon120_R9Id90_HE10_IsoM",
+  #                                           "HLT_Photon165_R9Id90_HE10_IsoM",
+  #                                           "HLT_Photon200"
+  #                                          )
 
 elif '2018'  in options['era']:
   options['TnPPATHS']           = cms.vstring("HLT_Ele32_WPTight_Gsf_v*")
@@ -210,21 +210,21 @@ elif '2018'  in options['era']:
                                    "passHltPhoton165" :                cms.vstring("hltEG165R9Id90HE10IsoMTrackIsoFilter"),
                                    "passHltPhoton200" :                cms.vstring("hltEG200HEFilter"),
                                   }
-  options['HLTPATHSMAP']   =  {
-                                     "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
-                                     "photon75" : cms.vstring("HLT_Photon75_R9Id90_HE10_IsoM_v*"),
-                                     "photon90" : cms.vstring("HLT_Photon90_R9Id90_HE10_IsoM_v*"),
-                                     "photon120": cms.vstring("HLT_Photon120_R9Id90_HE10_IsoM_v*"),
-                                     "photon165": cms.vstring("HLT_Photon165_R9Id90_HE10_IsoM_v*"),
-                                     "photon200": cms.vstring("HLT_Photon200_v*"),
-                                     }
-  options['HLTPATHSTOMEASURE'] = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM",
-                                             "HLT_Photon75_R9Id90_HE10_IsoM",
-                                             "HLT_Photon90_R9Id90_HE10_IsoM",
-                                             "HLT_Photon120_R9Id90_HE10_IsoM",
-                                             "HLT_Photon165_R9Id90_HE10_IsoM",
-                                             "HLT_Photon200"
-                                            )
+ # options['HLTPATHSMAP']   =  {
+ #                                    "photon50" : cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM_v*"),
+ #                                    "photon75" : cms.vstring("HLT_Photon75_R9Id90_HE10_IsoM_v*"),
+ #                                    "photon90" : cms.vstring("HLT_Photon90_R9Id90_HE10_IsoM_v*"),
+ #                                    "photon120": cms.vstring("HLT_Photon120_R9Id90_HE10_IsoM_v*"),
+ #                                    "photon165": cms.vstring("HLT_Photon165_R9Id90_HE10_IsoM_v*"),
+ #                                    "photon200": cms.vstring("HLT_Photon200_v*"),
+ #                                    }
+ # options['HLTPATHSTOMEASURE'] = cms.vstring("HLT_Photon50_R9Id90_HE10_IsoM",
+ #                                            "HLT_Photon75_R9Id90_HE10_IsoM",
+ #                                            "HLT_Photon90_R9Id90_HE10_IsoM",
+ #                                            "HLT_Photon120_R9Id90_HE10_IsoM",
+ #                                            "HLT_Photon165_R9Id90_HE10_IsoM",
+ #                                            "HLT_Photon200"
+ #                                           )
 
 # Apply L1 matching (using L1Threshold) when flag contains "L1match" in name
 options['ApplyL1Matching']      = any(['L1match' in flag for flag in options['HLTFILTERSTOMEASURE'].keys()])
