@@ -79,6 +79,9 @@ Check in EgammaAnalysis/TnPTreeProducer//crab the tnpCrabSubmit.py script to sub
 
 ```bash
 source /cvmfs/cms.cern.ch/common/crab-setup.sh
+python tnpCrabSubmit.py
+set L1=False
+using mainOutputDir = '/store/user/%s/%s' % (os.environ['USER'], submitVersion), output files will be stored in /eos
 ```
 
 ## To make a pull request to this repository
